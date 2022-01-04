@@ -1,9 +1,13 @@
 // Auth controller controll the data and change structure of data before it send to database or models/user model (middleware)
-// this is an middleware processs for user model
+//Route -->auth control (middlware =user model ) --> app.js
+
 const createError = require('http-errors')
 const user = require('../Models/user_model')
+const {authSchema} = require('../helpers/validation')
+const Sequelize = require('sequelize');
+const db = require('../helpers/sequelize_config');
 
-module.export ={
+module.exports ={
 
     register: async(req, res, next)=>{
 
@@ -12,22 +16,30 @@ module.export ={
             if (!email || !password) throw createError.BadRequest()
             const result = await authSchema.validateAsync(req.body)
             console.log({result})
-
+            res.status(201).send("Registered sucessfully..!")
         } catch(error){
             error.status = 422
             next(error)
         }
     },
 
-    login: async()=>{
+    demo: (req, res) => 
+    user.findAll()
+      .then(gigs => res.render('gigs', {
+          gigs
+        }))
+      .catch(err => res.render('error', {error: err})));
 
-    },
 
-    refreshtoken: async()=>{
+    // login: async()=>{
 
-    },
+    // },
 
-    logout: async()=>{
+    // refreshtoken: async()=>{
 
-    },
+    // },
+
+    // logout: async()=>{
+
+    // },
 }

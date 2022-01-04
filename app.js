@@ -11,6 +11,9 @@ require('dotenv').config()
 const developerRoute= require('./Routes/demo_developer_route')
 require('./helpers/init_postgres')
 const authroute = require('./Routes/auth_routes')
+require('./helpers/sequelize_config')
+
+
 
 app.use(morgan('dev'))
 app.use(helmet())
