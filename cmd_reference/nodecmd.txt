@@ -1,0 +1,61 @@
+################################################################################
+
+To run the node server using below command
+--node helloworl.js      
+
+################################################################################
+
+Basically, node server is need to restart every time make change in file. 
+So nodemon installed to restart the server automatically.
+
+=========Nodemon documentation : https://www.npmjs.com/package/nodemon=========
+
+Below command is used to install nodemon package
+--npm install -g nodemon
+
+################################################################################
+
+Using the below command we can run the nodemon node server.
+--nodemon helloword.js
+
+################################################################################
+
+
+
+End-point details
+
+server - http://localhost:8080
+
+GET — / | displayHome()
+GET — /developers | getdevelopers()
+GET — /developers/id | getUserById()
+
+{
+    "id":"9"
+}
+
+GET — /developers/name | getUserByName()
+
+{
+    "name":"PQR"
+}
+
+POST — /developers | createUser()
+
+post data details
+
+body - key : values
+
+{
+    "name":"abc",
+    "project":"project-c"
+}
+
+
+###########################################################################################
+
+                    Best practice reference
+
+--> https://blog.risingstack.com/10-best-practices-for-writing-node-js-rest-apis/
+
+###########################################################################################

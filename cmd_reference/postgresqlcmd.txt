@@ -1,0 +1,132 @@
+
+
+#####################################################################
+
+Handle port number error (port(5432) number already in use)
+
+open cmd as administrator
+
+netstat -ano
+taskkill /PID <PID> /F
+
+#####################################################################
+
+Start postgresql server in cmd
+
+--> pg_ctl -D "D:\database\PostgreSQL\12\data" start
+
+You need to be inside "C:\Program Files\PostgreSQL\11.4\bin" 
+directory to execute the above command.
+
+--> psql --version
+--> psql --port=5432 --host=localhost --dbname=nodeapi --username=postgres 
+(or) 
+--> psql -U postgres
+
+#####################################################################
+
+Show databases using below cmd
+
+--> \n
+   (or)
+--> \n+ (for more information)
+https://www.postgresqltutorial.com/postgresql-show-databases/
+
+#####################################################################
+
+Select database
+
+--> \c nodeapi;
+
+https://www.tutorialspoint.com/postgresql/postgresql_select_database.htm
+
+#####################################################################
+
+Show tables on the selected database
+
+--> \dt (or) \dt+
+--> SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';
+
+
+#####################################################################
+
+Create table
+
+--> create table developers(name varchar(20),projects text,id int);
+		
+				(or)
+
+create table with auto sequence id
+ 
+--> create table developer(name varchar(20),projects text,id serial primary key);
+
+or 
+
+ create table users(email varchar(20),password varchar(20),id serial primary key);
+
+#####################################################################
+
+How to alter sequence of id
+
+-->alter sequence developer_id_seq restart with 1;
+
+#####################################################################
+
+#####################################################################
+
+Insert data into a table
+
+insert into developers values('ABC','Project-A',1);
+insert into developers values('ABC','Project-C',2);
+insert into developers values('DEF','Project-D',3);
+insert into developers values('GHI','Project-G',4);
+insert into developers values('JKL','Project-K',5);
+insert into developers values('JKL','Project-L',6);
+insert into developers values('MNO','Project-O',7);
+insert into developers values('PQR','Project-P',8);
+insert into developers values('PQR','Project-Q',9);
+insert into developers values('PQR','Project-R',10);
+insert into developers values('STU','Project-U',11);
+insert into developers values('VWX','Project-V',12);
+insert into developers values('YZ','Project-Y',13);
+
+		(or)
+To gerenerate id sequencely
+
+insert into developer('name', 'projects') values('ABC','Project-A'), ('ABC','Project-C'), ('DEF','Project-D'),('GHI','Project-G'),('JKL','Project-K'),('JKL','Project-L'),('MNO','Project-O'),('PQR','Project-P'),('PQR','Project-Q'),('PQR','Project-R'),('STU','Project-U'),('VWX','Project-V'),('YZ','Project-Y');
+
+INSERT 0 1
+
+#####################################################################
+
+Show data in table
+
+select * from developers;
+
+#####################################################################
+
+update table
+
+update developers set age=50 where name='PQR';
+
+#####################################################################
+
+Delete data from table
+
+delete from dummy_table where age=65;
+
+#####################################################################
+
+
+
+reference link : 
+https://www.enterprisedb.com/postgres-tutorials/postgresql-query-introduction-explanation-and-50-examples
+https://stackabuse.com/using-postgresql-with-nodejs-and-node-postgres/
+
+Good psql and node --> https://www.split.io/blog/rest-api-node-postgres/
+
+Complete api building reference --. https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/
+
+
+Testing reference --> https://codeforgeek.com/unit-testing-nodejs-application-using-mocha/
+

@@ -1,0 +1,24 @@
+GET http://localhost:8080/
+
+
+###
+GET http://localhost:8080/developers
+
+###
+GET http://localhost:8080/developers/id
+Content-Type: application/json
+
+{
+    "id":9
+}
+
+
+###
+GET http://localhost:8080/developers/name
+Content-Type: application/json
+
+{
+    "name":"ABC"
+}
+
+
