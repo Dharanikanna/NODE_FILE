@@ -12,7 +12,8 @@ const developerRoute= require('./Routes/demo_developer_route')
 require('./helpers/init_postgres')
 const authroute = require('./Routes/auth_routes')
 require('./helpers/sequelize_config')
-
+const autho= require('./Controllers/auth0_control')
+const seq = require('./Routes/seq_route')
 
 
 app.use(morgan('dev'))
@@ -28,14 +29,45 @@ app.use(
 
 //api end points
 
-app.get('/', function(req, res){
-  res.json({
-    message: 'Hello from a private endpoint.'
-  });
-});
+// app.get('/', function(req, res){
+//   res.json({
+//     message: 'Hello from a private endpoint.'
+//   });
+// });
 
 app.use('/developers',developerRoute)
 app.use('/user',authroute)
+app.use('/',autho)
+app.use('/seq',seq)
+
+
+
+// const {auth} = require('express-openid-connect');
+
+// const config ={
+
+//     authRequired:false,
+//     issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+//     baseURL: process.env.BASE_URL,
+//     clientID: process.env.CLIENT_ID,
+//     secret: process.env.SECRET,
+//     errorOnRequiredAuth: true, // otherwise I get infinite redirect
+//     idpLogout: true,
+
+// }
+
+// app.use(auth(config));
+
+
+// app.get('/',(req,res)=>{
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
+
+// app.get('/profile',(req,res)=>{
+//   res.send(JSON.stringify(req.oidc.user));
+// });
+
+
 
 
 //Server setup

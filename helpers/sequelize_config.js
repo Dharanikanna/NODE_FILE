@@ -20,5 +20,5 @@ sequelize.authenticate()
 
 db.sequelize = sequelize
 
-module.exports = db
+module.exports = sequelize
 

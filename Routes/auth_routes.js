@@ -3,12 +3,22 @@
 const express = require('express')
 const router = express.Router()
 const user = require('../Controllers/auth_control')
+const model = require('../Models/user_model');
 
-router.get('/', user.demo)
 
-// Display add gig form
-router.get('/add', (req, res) => res.render('add'));
+router.get('/demo', (req, res, next) => 
+   data=model.user.get({attributes: ['email', 'password']})
+  .then(data  => {
+      console.log({data});
+      res.send(200);
+    })
+  .catch(err => res.render('error', {error: err}
+  ))
+  )
+
 
 router.post('/register',user.register)
+router.post('/login',user.login)
+
 
 module.exports = router
