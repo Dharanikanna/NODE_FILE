@@ -21,10 +21,10 @@ exports.create = async(req, res, next) => {
             });
             return;
           }
-    const result = await authSchema.validateAsync(req.body)
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(result.password, salt)
-    password = hashedPassword
+        const result = await authSchema.validateAsync(req.body)
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(result.password, salt)
+        password = hashedPassword
           // Create a Tutorial
           const user = {
             email: result.email,

@@ -24,7 +24,7 @@ module.exports = {
       })
     },
     verifyAccessToken: (req, res, next) => {
-      if (!req.headers['authorization']) return next(createError.Unauthorized())
+      if (!req.headers['authorization']) return res.send(createError.Unauthorized())
       const authHeader = req.headers['authorization']
       const bearerToken = authHeader.split(' ')
       const token = bearerToken[1]
@@ -32,7 +32,7 @@ module.exports = {
         if (err) {
           const message =
             err.name === 'JsonWebTokenError' ? 'Unauthorized' : err.message
-          return next(createError.Unauthorized(message))
+          return res.send(createError.Unauthorized(message))
         }
         req.payload = payload
         next()

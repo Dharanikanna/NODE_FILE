@@ -12,9 +12,16 @@ const developerRoute= require('./Routes/demo_developer_route')
 require('./helpers/init_postgres')
 const authroute = require('./Routes/auth_routes')
 require('./helpers/sequelize_config')
+// require('./helpers/init_redis')
 const autho= require('./Controllers/auth0_control')
 const seq = require('./Routes/seq_route')
+const {verifyAccessToken} = require('./helpers/jwt_helper');
 
+// client.SET('foo','Doo')
+// client.GET('foo',(err,value) => {
+//   if(err) console.log(err.message)
+//   console.log(value)
+// })
 
 app.use(morgan('dev'))
 app.use(helmet())
@@ -29,16 +36,18 @@ app.use(
 
 //api end points
 
-// app.get('/', function(req, res){
-//   res.json({
-//     message: 'Hello from a private endpoint.'
-//   });
-// });
+app.get('/home',verifyAccessToken, async (req, res, next) => {
+  // console.log(req.headers['authorization'])
+  res.send({
+    message: 'Hello User'
+  });
+});
 
-app.use('/developers',developerRoute)
+app.use('/developers',verifyAccessToken,developerRoute)
 app.use('/user',authroute)
 app.use('/',autho)
 app.use('/seq',seq)
+
 
 
 

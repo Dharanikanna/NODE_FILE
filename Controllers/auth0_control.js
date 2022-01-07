@@ -24,16 +24,15 @@ app.use(auth(config));
 
 
 app.get('/',(req,res)=>{
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  res.send(req.oidc.isAuthenticated() ? "<h1>Logged in </h1>": "<h1>Logged out</h1>");
 });
 
+ 
 app.get('/profile',(req,res)=>{
   res.send(JSON.stringify(req.oidc.user));
 });
 
 // app.get('/login', (req, res) => res.oidc.login({ returnTo: '/profile' }));
-
-
 
 module.exports=app
 

@@ -6,19 +6,10 @@ const user = require('../Controllers/auth_control')
 const model = require('../Models/user_model');
 
 
-router.get('/demo', (req, res, next) => 
-   data=model.user.get({attributes: ['email', 'password']})
-  .then(data  => {
-      console.log({data});
-      res.send(200);
-    })
-  .catch(err => res.render('error', {error: err}
-  ))
-  )
-
-
 router.post('/register',user.register)
 router.post('/login',user.login)
+router.post('/refresh-token', user.refreshtoken)
+router.delete('/logout', user.logout)
 
 
 module.exports = router

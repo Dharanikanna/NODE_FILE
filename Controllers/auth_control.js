@@ -2,11 +2,10 @@
 //Route -->auth control (middlware =user model ) --> app.js
 
 const createError = require('http-errors');
-const model = require('../Models/user_model');
 const {authSchema} = require('../helpers/validation');
-const Sequelize = require('sequelize');
 const db = require('../helpers/init_postgres');
 const bcrypt = require('bcrypt')
+
 const {
     signAccessToken,
     signRefreshToken,
@@ -19,13 +18,12 @@ module.exports ={
     register: async(req, res, next)=>{
 
         try{
-            // const { email, password } = req.body
-            // if (!email || !password) throw createError.BadRequest()
+
             var { email, password } = req.body
+            if (!email || !password) res.send(createError.BadRequest())
             const result = await authSchema.validateAsync(req.body)
-            /* 
-            Here first checking if the document is new by using a helper of mongoose .isNew, therefore, this.isNew is true if document is new else false, and we only want to hash the password if its a new document, else  it will again hash the password if you save the document again by making some changes in other fields incase your document contains other fields.
-            */
+      
+            
             const salt = await bcrypt.genSalt(10)
             const hashedPassword = await bcrypt.hash(password, salt)
             password = hashedPassword
@@ -42,7 +40,6 @@ module.exports ={
                     db.query('INSERT INTO users (email, password) VALUES ($1, $2) returning *;', [email, password], async (error, results) => {
                         
                         var user_id = String(results.rows[0].id)
-                        //console.log('id',user_id)
                         accessToken = await signAccessToken(user_id)
                         refreshToken = await signRefreshToken(user_id)
                         
@@ -72,35 +69,49 @@ module.exports ={
 
         try{
             // const { email, password } = req.body
-            // if (!email || !password) throw createError.BadRequest()
-            //var { email, password } = req.body
+            //if (!email || !password) res.send(createError.BadRequest())
+            var { email, password } = req.body
             const result = await authSchema.validateAsync(req.body)
-            /* 
-            Here first checking if the document is new by using a helper of mongoose .isNew, therefore, this.isNew is true if document is new else false, and we only want to hash the password if its a new document, else  it will again hash the password if you save the document again by making some changes in other fields incase your document contains other fields.
-            */
-            console.log(result)
+            if (!email || !password) res.send(createError.BadRequest())
 
+            console.log(result.password)
+            const plaintext= result.password
 
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(result.password, salt);
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(result.password, salt);
 
             await db.query('SELECT * FROM users WHERE email = $1', [result.email],async (error, results)=> {
 
                 if (results.rowCount ===0) {
-                    res.send(res.createError.NotFound('User not registered'))
+                    res.send( createError.NotFound('User not registered'))
                     
                 }
                 else{
-                    const isMatch = await bcrypt.compare(results.password, hash, function(err, result) {
+                    const isMatch = await bcrypt.compare(plaintext, hash , function(err, result) {
+                        console.log('pass:',plaintext)
+                        console.log('hash: ', hash)
                         console.log(result)
-                        res.send(createError.NotFound('User compare prob'))
+                        return result
+
                     });
-                    if (!isMatch){
+                    if (isMatch === false){
                         res.send( createError.Unauthorized('Username/password not valid'))
                     }
-                    res.send({info:'User Login Accessed'})
-                    const accessToken = signAccessToken(result.id)
-                    console.log(accessToken)
+                    else{
+                        var user_id = String(results.rows[0].id)
+                        const accessToken = await signAccessToken(user_id)
+                        const refreshToken = await signRefreshToken(user_id)
+
+                        console.log('Access token : ',accessToken)
+                        console.log('Refresh token : ',refreshToken)
+
+                        res.send({
+                            info:'User Login Accessed',
+                            AccessToken: accessToken,
+                            RefreshToken: refreshToken
+                        })
+                    }
+                    
                 }
                 })
             
@@ -110,13 +121,38 @@ module.exports ={
         }
     },
 
-     //}
+    refreshtoken: async(req, res, next)=>{
 
-    // refreshtoken: async()=>{
+        try {
+            const { refreshToken } = req.body
+            if (!refreshToken) throw createError.BadRequest()
+            const userId = await verifyRefreshToken(refreshToken)
+      
+            const accessToken = await signAccessToken(userId)
+            const refToken = await signRefreshToken(userId)
+            res.send({ accessToken: accessToken, refreshToken: refToken })
+          } catch (error) {
+            next(error)
+          }
 
-    // },
+    },
 
-    // logout: async()=>{
+    logout: async()=>{
 
-    // },
+        try {
+            const { refreshToken } = req.body
+            if (!refreshToken) throw createError.BadRequest()
+            const userId = await verifyRefreshToken(refreshToken)
+            client.DEL(userId, (err, val) => {
+              if (err) {
+                console.log(err.message)
+                throw createError.InternalServerError()
+              }
+              console.log(val)
+              res.sendStatus(204)
+            })
+          } catch (error) {
+            next(error)
+          }
+        }
 }
