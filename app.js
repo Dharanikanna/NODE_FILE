@@ -45,7 +45,9 @@ app.get('/home',verifyAccessToken, async (req, res, next) => {
 
 app.use('/developers',verifyAccessToken,developerRoute)
 app.use('/user',authroute)
+
 app.use('/',autho)
+
 app.use('/seq',seq)
 
 
