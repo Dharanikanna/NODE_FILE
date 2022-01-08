@@ -1,12 +1,15 @@
 const User = require('../Models/user_model');
 const {authSchema} = require('../helpers/validation');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
+const createError = require('http-errors');
+
+
 const {
     signAccessToken,
     signRefreshToken,
-    verifyRefreshToken,
+    // verifyRefreshToken,
   } = require('../helpers/jwt_helper');
 
 
@@ -21,80 +24,123 @@ exports.create = async(req, res, next) => {
             });
             return;
           }
+        
+          var {email, password} = req.body
+        
         const result = await authSchema.validateAsync(req.body)
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(result.password, salt)
+        // const salt = await bcrypt.genSalt(10)
+        // const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedPassword = bcrypt.hashSync(req.body.password, 8)
         password = hashedPassword
           // Create a Tutorial
           const user = {
             email: result.email,
             password: password,
           };
-        
           var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
-          const exist = User.findOne({ where: condition })
-          if(exist)
+          const doesExist = await User.findOne({ where : condition })
+          if (doesExist) {
+            res.send(createError.Conflict(`${result.email} is already been registered`))
+          }
 
+          else{
           User.create(user)
-            .then(data => {
-              res.send(data);
+            .then(async data => {
+              //res.send(data);
+              console.log('Data-id:',data.id)
+              accessToken =  await signAccessToken(String(data.id))
+              refreshToken = await signRefreshToken(String(data.id))
+              
+              console.log("Access: ",accessToken)
+              console.log("Refresh: ",refreshToken)
+              res.send({
+                Data: data,
+                AccessToken: accessToken,
+                RefreshToken: refreshToken
+              })
             })
             .catch(err => {
               res.status(500).send({
                 message:
                   err.message || "Some error occurred while creating the Tutorial."
               });
-            });    
+            });
+          }    
     } catch(error){
         if (error.isJoi === true) error.status = 422
         next(error)
     }
 };
 
-// Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
-  
-    const email = req.query.email;
-    var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
-  
-    User.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
-        });
-      });
-};
 
-// Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
 
-    var email = req.body.email;
+    var {email, password} = req.body;
     console.log(email)
-
     var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
-
 
     User.findOne({ where: condition })
-    .then(data => {
+    .then(async data => {
       if (data) {
-        res.send(data);
+        //res.send(data);
+        console.log('Data-id:',data.id)
+        var passwordIsValid = bcrypt.compareSync(password, data.password);
+        console.log("Password Validation : ",passwordIsValid)
+
+      //   const isMatch =  await bcrypt.compare(password, data.passsword , function(err, result) {
+        console.log('Entered Password:',password)
+        console.log('DB Decrypted: ', data.password)
+        // return result
+      // })
+
+      if (passwordIsValid === false){
+          res.send( createError.Unauthorized('Username/password not valid'))
+      }
+      else{
+        accessToken = await signAccessToken(String(data.id))
+        refreshToken = await signRefreshToken(String(data.id))
+        
+        console.log("Access: ",accessToken)
+        console.log("Refresh: ",refreshToken)
+        res.send({
+          Data: data,
+          AccessToken: accessToken,
+          RefreshToken: refreshToken
+        })
+      }
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorial with id=${id}.`
+          message: `Cannot find User with email=${email}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with email=" + email
+        message: "Error retrieving User with email=" + email
       });
     });
   
 };
+
+// Retrieve all Tutorials from the database.
+// exports.findAll = (req, res) => {
+  
+//     const email = req.query.email;
+//     var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
+  
+//     User.findAll({ where: condition })
+//       .then(data => {
+//         res.send(data);
+//       })
+//       .catch(err => {
+//         res.status(500).send({
+//           message:
+//             err.message || "Some error occurred while retrieving User."
+//         });
+//       });
+// };
+
+// Find a single Tutorial with an id
 
 // // Update a Tutorial by the id in the request
 // exports.update = (req, res) => {
@@ -180,3 +226,7 @@ exports.findOne = (req, res) => {
 //       });
 //     });
 // };
+
+
+// Reference
+//https://www.bezkoder.com/node-express-sequelize-postgresql/

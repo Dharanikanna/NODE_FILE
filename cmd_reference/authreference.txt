@@ -28,4 +28,9 @@ router.get('/profile',(req,res)=>{
 
 reference:
 https://auth0.com/docs/quickstart/webapp/express#2-configure-logout-url
+https://github.com/trulymittal/API-Authentication-NodeJs
+https://github.com/bradtraversy/codegig/blob/master/models/Gig.js
+
+Sequalize reference
+https://www.bezkoder.com/node-express-sequelize-postgresql/
 

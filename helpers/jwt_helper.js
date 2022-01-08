@@ -14,6 +14,7 @@ module.exports = {
           audience: userId,
         }
         JWT.sign(payload, secret, options, (err, token) => {
+          algorithm: 'RS256'
           if (err) {
             console.log(err.message)
             reject(createError.InternalServerError())

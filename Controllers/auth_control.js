@@ -4,7 +4,7 @@
 const createError = require('http-errors');
 const {authSchema} = require('../helpers/validation');
 const db = require('../helpers/init_postgres');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const {
     signAccessToken,
@@ -24,8 +24,9 @@ module.exports ={
             const result = await authSchema.validateAsync(req.body)
       
             
-            const salt = await bcrypt.genSalt(10)
-            const hashedPassword = await bcrypt.hash(password, salt)
+            // const salt = await bcrypt.genSalt(10)
+            // const hashedPassword = await bcrypt.hash(password, salt)
+            const hashedPassword = bcrypt.hashSync(req.body.password, 8)
             password = hashedPassword
             console.log({result})
             console.log({hashedPassword})
@@ -75,25 +76,25 @@ module.exports ={
             if (!email || !password) res.send(createError.BadRequest())
 
             console.log(result.password)
-            const plaintext= result.password
+            const enteredPassword= password
 
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(result.password, salt);
+            // const salt = await bcrypt.genSalt(10);
+            // const hash = await bcrypt.hash(result.password, salt);
 
             await db.query('SELECT * FROM users WHERE email = $1', [result.email],async (error, results)=> {
+
+                const dbPassword = results.rows[0].password
 
                 if (results.rowCount ===0) {
                     res.send( createError.NotFound('User not registered'))
                     
                 }
                 else{
-                    const isMatch = await bcrypt.compare(plaintext, hash , function(err, result) {
-                        console.log('pass:',plaintext)
-                        console.log('hash: ', hash)
-                        console.log(result)
-                        return result
+                    const isMatch = bcrypt.compareSync(enteredPassword, dbPassword);
+                    console.log('Entered Password:',enteredPassword)
+                    console.log('DB password: ', dbPassword)
+                    console.log('isMatch : ', isMatch)
 
-                    });
                     if (isMatch === false){
                         res.send( createError.Unauthorized('Username/password not valid'))
                     }
@@ -107,11 +108,11 @@ module.exports ={
 
                         res.send({
                             info:'User Login Accessed',
+                            UserId:user_id,
                             AccessToken: accessToken,
                             RefreshToken: refreshToken
                         })
-                    }
-                    
+                    }   
                 }
                 })
             

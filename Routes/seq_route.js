@@ -7,8 +7,8 @@ const model = require('../Models/user_model');
 
 
 
-router.post('/create',seq.create)
-router.post('/findall',seq.findAll)
-router.post('/findone',seq.findOne)
+router.post('/register',seq.create)
+//router.post('/findall',seq.findAll)
+router.post('/login',seq.findOne)
 
 module.exports = router

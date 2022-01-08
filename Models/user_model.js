@@ -45,15 +45,15 @@ User.init({
   );
 
 
-//if not exist()
+// if table not exist()
 // User.sync({ force: true });
 // console.log("The table for the User model was just (re)created!");
 
-
-// the defined model is the class itself
 console.log(User === sequelize.models.User); // true
-
-
 
 module.exports = User
 
+
+
+
+// the defined model is the class itself
