@@ -8,7 +8,7 @@ const model = require('../Models/user_model');
 
 router.post('/register',user.register)
 router.post('/login',user.login)
-router.post('/refresh-token', user.refreshtoken)
+router.post('/refreshtoken', user.refreshtoken)
 router.delete('/logout', user.logout)
 
 

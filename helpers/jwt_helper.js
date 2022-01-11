@@ -74,15 +74,16 @@ module.exports = {
           (err, payload) => {
             if (err) return reject(createError.Unauthorized())
             const userId = payload.aud
-            client.GET(userId, (err, result) => {
-              if (err) {
-                console.log(err.message)
-                reject(createError.InternalServerError())
-                return
-              }
-              if (refreshToken === result) return resolve(userId)
-              reject(createError.Unauthorized())
-            })
+            // client.GET(userId, (err, result) => {
+            //   if (err) {
+            //     console.log(err.message)
+            //     reject(createError.InternalServerError())
+            //     return
+            //   }
+            //   if (refreshToken === result) return resolve(userId)
+            //   reject(createError.Unauthorized())
+            // })
+            resolve(userId)
           }
         )
       })

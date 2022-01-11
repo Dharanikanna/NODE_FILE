@@ -13,6 +13,8 @@ taskkill /PID <PID> /F
 
 Start postgresql server in cmd
 
+D:\database\PostgreSQL\12\bin
+
 --> pg_ctl -D "D:\database\PostgreSQL\12\data" start
 
 You need to be inside "C:\Program Files\PostgreSQL\11.4\bin" 
@@ -122,6 +124,19 @@ delete from dummy_table where age=65;
 
 #####################################################################
 
+
+csv to postgres table 
+
+create table healthcare(id serial primary key, Pregnancies varchar,Glucose varchar,BloodPressure varchar, SkinThickness varchar,Insulin varchar, BMI varchar, DiabetesPedigreeFunction varchar,Age varchar,Outcome varchar);
+
+copy healthcare(Pregnancies,Glucose,BloodPressure,SkinThickness, Insulin, BMI, DiabetesPedigreeFunction,Age,Outcome)From 'D:\MASTERS_DATA_SCINETIST\MASTER_COURSE\MACHINE_LEARNING\Demo Datasets\Lesson 9\pima-indians-diabetes.csv' delimiter ',' csv header;
+
+--> Another table
+
+create table diabetic(id serial primary key, encounter_id varchar,patient_nbr varchar,race varchar, gender varchar,age varchar, weight varchar, diag_1 varchar, diag_2 varchar, diag_3 varchar, number_diagnoses varchar,max_glu_serum varchar, A1Cresult varchar, metformin varchar,	repaglinide varchar,nateglinide varchar,chlorpropamide varchar);
+copy diabetic(encounter_id ,patient_nbr ,race , gender ,age , weight , diag_1 , diag_2 , diag_3 , number_diagnoses ,max_glu_serum , A1Cresult , metformin ,repaglinide ,nateglinide ,chlorpropamide) FROM 'D:\MASTERS_DATA_SCINETIST\MASTER_COURSE\MACHINE_LEARNING\Demo Datasets\Lesson 9\diabetic_data.csv' delimiter ',' csv header;
+
+#####################################################################
 
 
 reference link : 

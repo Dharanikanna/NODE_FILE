@@ -16,6 +16,10 @@ require('./helpers/sequelize_config')
 const autho= require('./Controllers/auth0_control')
 const seq = require('./Routes/seq_route')
 const {verifyAccessToken} = require('./helpers/jwt_helper');
+const healthcare = require('./Routes/healthcare_route')
+const diabetic = require('./Routes/diabetic_routes')
+const csv = require('./Models/exportCSV')
+
 
 // client.SET('foo','Doo')
 // client.GET('foo',(err,value) => {
@@ -44,43 +48,23 @@ app.get('/home',verifyAccessToken, async (req, res, next) => {
 });
 
 app.use('/developers',verifyAccessToken,developerRoute)
+app.use('/healthcare',healthcare)
+app.use('/diabetic',diabetic)
+
+app.use('/csv',csv)
+
 app.use('/user',authroute)
 
 app.use('/',autho)
 
 app.use('/seq',seq)
 
-
-
-
-// const {auth} = require('express-openid-connect');
-
-// const config ={
-
-//     authRequired:false,
-//     issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
-//     baseURL: process.env.BASE_URL,
-//     clientID: process.env.CLIENT_ID,
-//     secret: process.env.SECRET,
-//     errorOnRequiredAuth: true, // otherwise I get infinite redirect
-//     idpLogout: true,
-
-// }
-
-// app.use(auth(config));
-
-
-// app.get('/',(req,res)=>{
-//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-// });
-
-// app.get('/profile',(req,res)=>{
-//   res.send(JSON.stringify(req.oidc.user));
-// });
-
-
-
-
+app.use('/callback', async (req, res, next) => {
+  // https://dev-hsoy6bli.us.auth0.com/samlp/KYYjhtuAuHzaCwDTKKE08UMnu70iSkqV
+  res.send({
+    info: 'hey'
+  });
+})
 //Server setup
 
 
@@ -90,4 +74,4 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
 
-
+// nodemon app.js

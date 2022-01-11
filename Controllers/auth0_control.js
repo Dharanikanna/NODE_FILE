@@ -27,13 +27,21 @@ app.get('/',(req,res)=>{
   res.send(req.oidc.isAuthenticated() ? "<h1>Logged in </h1>": "<h1>Logged out</h1>");
 });
 
- 
+
 app.get('/profile',(req,res)=>{
-  res.send(JSON.stringify(req.oidc.user));
+  const data = req.oidc.user
+  console.log(data)
+  res.send(req.oidc.user);
 });
+
 
 // app.get('/login', (req, res) => res.oidc.login({ returnTo: '/profile' }));
 
 module.exports=app
 
 //https://dev-hsoy6bli.us.auth0.com/u/login?state=hKFo2SAwUjNMN3NzcV9wbmNDcUlNODc3d3JkVVpFaGZoYTZTbqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIF9STEEydzU0MWplRmRkTmk1bEZhZ2phZ0xKSE5fZFBIo2NpZNkgS1lZamh0dUF1SHphQ3dEVEtLRTA4VU1udTcwaVNrcVY
+
+
+// app.get('/',(req,res)=>{
+//   res.send(req.oidc.isAuthenticated() ? "<h1>Logged in </h1>": "<h1>Logged out</h1>");
+// });
