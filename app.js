@@ -19,6 +19,7 @@ const {verifyAccessToken} = require('./helpers/jwt_helper');
 const healthcare = require('./Routes/healthcare_route')
 const diabetic = require('./Routes/diabetic_routes')
 const csv = require('./Models/exportCSV')
+const email = require('./Models/email')
 
 
 // client.SET('foo','Doo')
@@ -52,6 +53,7 @@ app.use('/healthcare',healthcare)
 app.use('/diabetic',diabetic)
 
 app.use('/csv',csv)
+app.use('/email',email)
 
 app.use('/user',authroute)
 
@@ -74,4 +76,4 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
 
-// nodemon app.js
+// to start app use the command => nodemon app.js
