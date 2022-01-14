@@ -4,8 +4,8 @@
 const {Sequelize, DataTypes, Model} = require('sequelize');
 // const db = require('../helpers/sequelize_config');
 
-const sequelize = new Sequelize(process.env.HDATABASE,process.env.HDB_USER,process.env.HDB_PASSWORD,{
-    host:process.env.HDB_HOST,
+const sequelize = new Sequelize(process.env.DATABASE,process.env.DB_USER,process.env.DB_PASSWORD,{
+    host:process.env.DB_HOST,
     dialect:'postgres',
     pool: {
         max: 5,
