@@ -41,7 +41,7 @@ app.use(
 
 //api end points
 
-app.get('/home',verifyAccessToken, async (req, res, next) => {
+app.get('/home', async (req, res, next) => {
   // console.log(req.headers['authorization'])
   res.send({
     message: 'Hello User'
