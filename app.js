@@ -48,7 +48,7 @@ app.get('/home', async (req, res, next) => {
   });
 });
 
-app.use('/developers',verifyAccessToken,developerRoute)
+app.use('/developers',developerRoute)
 app.use('/healthcare',healthcare)
 app.use('/diabetic',diabetic)
 
