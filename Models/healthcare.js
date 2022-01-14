@@ -15,7 +15,7 @@ const getAllData = async (request, response) => {
         if (error) {
         response.send(error.message)
         }
-        response.status(200).json(results.rows)
+        response.status(200).json(results)
     })
 }
 
