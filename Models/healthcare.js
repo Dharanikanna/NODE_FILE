@@ -3,11 +3,11 @@ require('dotenv').config()
 const createError = require('http-errors');
 
 const db = new Pool({
-  user: process.env.HDB_USER,
-  host: process.env.HDB_HOST,
-  database: process.env.HDATABASE,
-  password: process.env.HDB_PASSWORD,
-  port: process.env.HDB_PORT,
+  user: 'hcudbjagppfwtn',
+  host: 'ec2-3-232-22-121.compute-1.amazonaws.com',
+  database: 'd7ur26qmph50fo',
+  password: 'b2d0dbb86602ddb41070f948e897dc28a233a8297946091a0b4b04d0063b7749',
+  port: process.env.DB_PORT,
 })
 
 const getAllData = async (request, response) => {
