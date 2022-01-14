@@ -14,6 +14,7 @@ const sequelize = new Sequelize(process.env.DATABASE,process.env.DB_USER,process
         idle: 10000,
         operatorsAliases: false,
       },
+    ssl: { rejectUnauthorized: false },
 })
 
 class User extends Model {}
