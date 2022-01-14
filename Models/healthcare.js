@@ -8,6 +8,7 @@ const db = new Pool({
   database: 'd7ur26qmph50fo',
   password: 'b2d0dbb86602ddb41070f948e897dc28a233a8297946091a0b4b04d0063b7749',
   port: process.env.DB_PORT,
+  ssl: true
 })
 
 const getAllData = async (request, response) => {
