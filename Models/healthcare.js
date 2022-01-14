@@ -13,7 +13,7 @@ const db = new Pool({
 const getAllData = async (request, response) => {
     db.query('SELECT * FROM healthcare', (error, results) => {
         if (error) {
-        throw error
+        response.send(error.message)
         }
         response.status(200).json(results.rows)
     })
