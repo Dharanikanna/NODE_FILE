@@ -20,6 +20,10 @@
     "redis": "^4.0.1",
     "sequelize": "^6.12.5"
   },
+  "engines": {
+        "npm": "5.6.0",
+        "node": "8.10.0"
+      }
   "name": "node_file",
   "version": "1.0.0",
   "main": "app.js",
