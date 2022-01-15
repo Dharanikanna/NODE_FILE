@@ -3,7 +3,9 @@
 
 const createError = require('http-errors');
 const {authSchema} = require('../helpers/validation');
-const db = require('../helpers/init_postgres');
+// const db = require('../helpers/init_postgres');
+const db = require('../helpers/init_herokupg');
+
 const bcrypt = require('bcryptjs')
 
 const {

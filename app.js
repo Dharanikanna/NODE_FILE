@@ -20,6 +20,9 @@ const healthcare = require('./Routes/healthcare_route')
 const diabetic = require('./Routes/diabetic_routes')
 const csv = require('./Models/exportCSV')
 const email = require('./Models/email')
+require('./Models/heroku')
+const heroku = require('./Routes/heroku_routes')
+
 
 
 // client.SET('foo','Doo')
@@ -51,6 +54,8 @@ app.get('/home',verifyAccessToken, async (req, res, next) => {
 app.use('/developers',verifyAccessToken,developerRoute)
 app.use('/healthcare',healthcare)
 app.use('/diabetic',diabetic)
+app.use('/heroku',heroku)
+
 
 app.use('/csv',csv)
 app.use('/email',email)

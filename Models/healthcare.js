@@ -1,6 +1,9 @@
+const pg = require('pg')
 const Pool = require('pg').Pool
 require('dotenv').config()
 const createError = require('http-errors');
+pg.defaults.ssl = false;
+
 
 const db = new Pool({
   user: process.env.DB_USER,
@@ -10,12 +13,19 @@ const db = new Pool({
   port: process.env.DB_PORT,
 })
 
+
+db.connect()
+.then(() => {console.log('Healthcare Postgres connected.')})
+.catch((err) => console.log("error :",err.message))
+
 const getAllData = async (request, response) => {
     db.query('SELECT * FROM healthcare', (error, results) => {
         if (error) {
-        throw error
+          response.send(error.message)
         }
-        response.status(200).json(results.rows)
+        else{
+          response.status(200).json(results.rows)
+        }
     })
 }
 
@@ -24,9 +34,12 @@ const getDataById = async (request, response) => {
 
     db.query('SELECT * FROM healthcare WHERE id = $1', [id], (error, results) => {
         if (error) {
-        throw error
+        response.send(error.message)
+        console.log(error.message)
         }
-        response.status(200).json(results.rows)
+        else{
+          response.status(200).json(results.rows)
+        }
     })
 }
 
@@ -51,7 +64,7 @@ const createData = async (request, response) => {
   
     db.query('UPDATE healthcare SET diabetespedigreefunction =$1 WHERE id= $2;', [String(diabetespedigreefunction), id], (error, results) => {
       if (error) {
-        throw error
+        response.send(error.message)
       }
       response.status(201).send(`Health detail updated with ID: ${id}`)
     })
@@ -62,7 +75,7 @@ const createData = async (request, response) => {
   
     db.query('DELETE FROM healthcare WHERE id = $1', [id], (error, results) => {
       if (error) {
-        throw error
+        response.send(error.message)
       }
       response.status(200).send(`User deleted with ID: ${id}`)
     })

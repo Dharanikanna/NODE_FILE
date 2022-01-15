@@ -25,6 +25,11 @@ directory to execute the above command.
 (or) 
 --> psql -U postgres
 
+-- heroku connection : psql -h ec2-3-232-22-121.compute-1.amazonaws.com  -U hcudbjagppfwtn d7ur26qmph50fo
+pass : b2d0dbb86602ddb41070f948e897dc28a233a8297946091a0b4b04d0063b7749
+
+reference : https://stackoverflow.com/questions/20775490/how-to-create-or-manage-heroku-postgres-database-instance
+
 #####################################################################
 
 Show databases using below cmd
@@ -130,6 +135,8 @@ csv to postgres table
 create table healthcare(id serial primary key, Pregnancies varchar,Glucose varchar,BloodPressure varchar, SkinThickness varchar,Insulin varchar, BMI varchar, DiabetesPedigreeFunction varchar,Age varchar,Outcome varchar);
 
 copy healthcare(Pregnancies,Glucose,BloodPressure,SkinThickness, Insulin, BMI, DiabetesPedigreeFunction,Age,Outcome)From 'D:\MASTERS_DATA_SCINETIST\MASTER_COURSE\MACHINE_LEARNING\Demo Datasets\Lesson 9\pima-indians-diabetes.csv' delimiter ',' csv header;
+// heroku
+-c \copy healthcare(Pregnancies,Glucose,BloodPressure,SkinThickness, Insulin, BMI, DiabetesPedigreeFunction,Age,Outcome)From 'D:\MASTERS_DATA_SCINETIST\MASTER_COURSE\MACHINE_LEARNING\Demo Datasets\Lesson 9\pima-indians-diabetes.csv' delimiter ',' csv header;
 
 --> Another table
 
