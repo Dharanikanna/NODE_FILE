@@ -22,6 +22,12 @@ const csv = require('./Models/exportCSV')
 const email = require('./Models/email')
 require('./Models/heroku')
 const heroku = require('./Routes/heroku_routes')
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require('swagger-jsdoc');
+const docs = require('./doc/approutes');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('swagger.yaml');
+
 
 
 
@@ -55,24 +61,32 @@ app.use('/developers',verifyAccessToken,developerRoute)
 app.use('/healthcare',healthcare)
 app.use('/diabetic',diabetic)
 app.use('/heroku',heroku)
-
-
 app.use('/csv',csv)
 app.use('/email',email)
-
 app.use('/user',authroute)
-
 app.use('/',autho)
-
 app.use('/seq',seq)
 
-app.use('/callback', async (req, res, next) => {
-  // https://dev-hsoy6bli.us.auth0.com/samlp/KYYjhtuAuHzaCwDTKKE08UMnu70iSkqV
-  res.send({
-    info: 'hey'
-  });
-})
-//Server setup
+
+const options  = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: "Node API",
+      version: '1.0.0',
+      
+    },
+    // servers: [
+    //   {
+    //     url: "http://localhost:8080/home",
+    //   },
+    // ],
+  },
+  apis: ['./doc/approutes.js'],
+};
+const swaggerDocs = swaggerJsDoc(options );
+console.log(swaggerDocs)
+app.use('/apidocs',swaggerUI.serve,swaggerUI.setup(swaggerDocument));
 
 
 const port = process.env.PORT || 8080

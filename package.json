@@ -18,7 +18,10 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "redis": "^4.0.1",
-    "sequelize": "^6.12.5"
+    "sequelize": "^6.12.5",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
+    "yamljs": "^0.3.0"
   },
   "engines": {
     "node": "16.13.0",

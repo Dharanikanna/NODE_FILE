@@ -1,0 +1,21 @@
+module.exports={
+    components:{
+        schemas:{
+            user:{
+                type:'object',
+                properties:{
+                    email:{
+                        type:'string',
+                        description:"Todo identification number",
+                        example:"abc@gmail.com"
+                    },
+                    password:{
+                        type:'string',
+                        description:"password",
+                        example:"abc"
+                    },
+                }
+            },
+        }              
+    }
+}
