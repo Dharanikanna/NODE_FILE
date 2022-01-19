@@ -2,7 +2,7 @@
 
 // Importing required modules 
 'use strict';
-
+const cors = require('cors');
 const helmet = require('helmet');
 const express = require('express')
 const morgan = require('morgan')
@@ -27,6 +27,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const docs = require('./doc/approutes');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('swagger.yaml');
+
 
 
 
@@ -84,13 +85,15 @@ const options  = {
   },
   apis: ['./doc/approutes.js'],
 };
-const swaggerDocs = swaggerJsDoc(options );
+const swaggerDocs = swaggerJsDoc(options);
 console.log(swaggerDocs)
-app.use('/apidocs',swaggerUI.serve,swaggerUI.setup(swaggerDocument));
+app.use('/apidocs',swaggerUI.serve,swaggerUI.setup(swaggerDocs));
 
 
 const port = process.env.PORT || 8080
-
+app.use(cors({
+  origin: '*'
+}));
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })

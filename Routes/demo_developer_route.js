@@ -5,10 +5,10 @@ var router = express.Router();
 const db = require('../Models/demoqueries')
 
 
-router.get('/', db.getAllDeveloper)
+router.get('/getall', db.getAllDeveloper)
 router.get('/id', db.getDeveloperById)
 router.get('/name', db.getDeveloperByName)
-router.post('/', db.createDeveloper)
-router.delete('/id', db.deleteDeveloper)
+router.post('/create', db.createDeveloper)
+router.delete('/delete', db.deleteDeveloper)
 
 module.exports = router
