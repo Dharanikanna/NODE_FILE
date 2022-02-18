@@ -7,7 +7,7 @@ const heroku = require('../Models/heroku')
 
 router.get('/getall',healthcare.getAllData)
 router.get('/heroku',heroku.getAllData)
-router.get('/id',healthcare.getDataById)
+router.post('/id',healthcare.getDataById)
 router.post('/create', healthcare.createData)
 router.post('/update', healthcare.updateData)
 router.delete('/delete', healthcare.deleteData)

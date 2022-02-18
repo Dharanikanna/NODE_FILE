@@ -8,6 +8,10 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 require('dotenv').config()
+const multer = require('multer');
+
+
+
 const developerRoute= require('./Routes/demo_developer_route')
 require('./helpers/init_postgres')
 const authroute = require('./Routes/auth_routes')
@@ -20,6 +24,7 @@ const healthcare = require('./Routes/healthcare_route')
 const diabetic = require('./Routes/diabetic_routes')
 const csv = require('./Models/exportCSV')
 const email = require('./Models/email')
+const uploadcsv = require('./Models/uploadcsv')
 require('./Models/heroku')
 const heroku = require('./Routes/heroku_routes')
 const swaggerUI = require("swagger-ui-express");
@@ -27,7 +32,8 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const docs = require('./doc/approutes');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('swagger.yaml');
-
+const upload = multer({ dest: './Upload' });
+// const upload = require('express-fileupload');
 
 
 
@@ -49,6 +55,9 @@ app.use(
   })
 )
 
+app.use(cors());
+// app.use(upload());
+
 //api end points
 
 app.get('/home',verifyAccessToken, async (req, res, next) => {
@@ -58,7 +67,7 @@ app.get('/home',verifyAccessToken, async (req, res, next) => {
   });
 });
 
-app.use('/developers',verifyAccessToken,developerRoute)
+app.use('/developers',developerRoute)
 app.use('/healthcare',healthcare)
 app.use('/diabetic',diabetic)
 app.use('/heroku',heroku)
@@ -68,6 +77,23 @@ app.use('/user',authroute)
 app.use('/',autho)
 app.use('/seq',seq)
 
+app.post('/upload', upload.single('file') , uploadcsv)
+
+// app.post('/upload', async function (req, res) {
+//   try {
+//    const file = req.files;
+//    const bodyData = req.body;
+//    console.log(file);
+//    console.log(bodyData);
+
+//    res.status(200).send({
+//    message: "FILE RECEIVED!",
+//    data: file
+//   });
+//   } catch (error) {
+//   res.send(error.message);
+//   }
+//  });
 
 const options  = {
   definition: {

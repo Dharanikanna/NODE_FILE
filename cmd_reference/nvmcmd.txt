@@ -1,0 +1,13 @@
+nvm ls-remote
+
+nvm install v16.14.0
+
+nvm list
+
+nvm use 17.5.0 
+
+node --version 
+
+nvm list 
+
+nvm uninstall v9.5.0 

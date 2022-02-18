@@ -24,7 +24,17 @@ const getAllData = async (request, response) => {
           response.send(error.message)
         }
         else{
-          response.status(200).json(results.rows)
+          //response.status(200).json(results.rows)
+          const page = request.query.page
+          const limit = request.query.limit
+          const startindex = (page - 1) * limit
+          const endindex =  page * limit
+          console.log("Page :", page, "Limit :",limit)
+
+          console.log("Start_index :", startindex, "End_index :",endindex)
+          const out = results.rows.slice(startindex, endindex)
+          response.setHeader('Content-Type', 'application/json');
+          response.send(JSON.stringify(results.rows))
         }
     })
 }

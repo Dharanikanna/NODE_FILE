@@ -1,0 +1,10 @@
+load_no, container_no, size, ssl, port_terminal, export_booking_no, eta, lfd, custom, freight, pickup_status, gate_out_date, scheduled_delivery_date, Actual_delivery_date, empty_ready_for_pu, empty_return_pu_date, delivery_location, Customer, cc, load_content, notes, status
+1429,APZU3542853,20GP,CMDU-CMA-CGM,MAHER,,1/22/2022,27-Jan,RELEASED,RELEASED,AVAILABLE,1/27/2022,1/28/2022,1/28/2022,,,"SADDLE BROOK, NJ",MG,VH,PLT,,Live Unload
+1494,EITU1551249,40,COSCO,MAHER,,21-Jan,10-Feb,ReleASED,RELEASED,Available,8-Feb,2/8/2022,2/8/2022,,,"SADDLE BROOK, NJ",MG,VH,FL,,
+1488,APZU3257497,20,CDMU-CMA-CGM,MAHER,,26-Jan,8-Feb,RELEASED,RELEASED,AVailable,8-Feb,2/8/2022,2/8/2022,,,"SADDLE BROOK, NJ",MG,VH,PLT,Wire,Live Unload
+1505,LYGU6148338,20,COSU - COSCO ,MAHER,,30-Jan,,,,,,,,,,"sADDLE BROOK, NJ",MG,VH,PLT,wire band,Hold
+1504,LYGU6148261,20,COSU - COSCO ,MAHER,,30-Jan,,,,,,,,,,"sADDLE BROOK, NJ",MG,VH,PLT,Wire band,Hold
+1522,MSDU2743324,20,MSC,GCT,,11-Feb,,,,,,,,,,,,,,,Hold
+1514,MSDU2742415,20,MSC,GCT,,11-Feb,,,,,,,,,,,,,,,Hold
+1535,MSDU2698354,20,Maersk,APM,,10-Feb,,,,,,,,,,,,,,,Hold
+1534,MSDU2698858,20,Maersk,APM,,10-Feb,,,,,,,,,,,,,,,Hold

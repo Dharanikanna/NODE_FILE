@@ -143,6 +143,27 @@ copy healthcare(Pregnancies,Glucose,BloodPressure,SkinThickness, Insulin, BMI, D
 create table diabetic(id serial primary key, encounter_id varchar,patient_nbr varchar,race varchar, gender varchar,age varchar, weight varchar, diag_1 varchar, diag_2 varchar, diag_3 varchar, number_diagnoses varchar,max_glu_serum varchar, A1Cresult varchar, metformin varchar,	repaglinide varchar,nateglinide varchar,chlorpropamide varchar);
 copy diabetic(encounter_id ,patient_nbr ,race , gender ,age , weight , diag_1 , diag_2 , diag_3 , number_diagnoses ,max_glu_serum , A1Cresult , metformin ,repaglinide ,nateglinide ,chlorpropamide) FROM 'D:\MASTERS_DATA_SCINETIST\MASTER_COURSE\MACHINE_LEARNING\Demo Datasets\Lesson 9\diabetic_data.csv' delimiter ',' csv header;
 
+Columns
+load_no, container_no, size, ssl, port_terminal, export_booking_no, eta, lfd, custom, freight, pickup_status, gate_out_date, scheduled_delivery_date, Actual_delivery_date, empty_ready_for_pu, empty_return_pu_date, delivery_location, Customer, cc, load_content, notes, status
+
+
+"LOAD NO","CONTAINER NO","SIZE","SSL","PORT TERMINAL","EXPORT BOOKING NO","ETA","LFD","CUSTOMS","FREIGHT","PICK-UP STATUS","GATE OUT DATE","SCHEDULED DELIVERY DATE","ACTUAL DELIVERY DATE","EMPTY READY FOR P/U","EMPTY RETURN P/U DATE","DELIVERY LOCATION","CUSTOMER","CC","Load Content","NOTES"
+
+create table liveload("LOAD NO" varchar,"CONTAINER NO" varchar,"SIZE" varchar,"SSL" varchar,"PORT TERMINAL" varchar,"EXPORT BOOKING NO" varchar,"ETA" varchar,"LFD" varchar,"CUSTOMS" varchar,"FREIGHT" varchar,"PICK-UP STATUS" varchar,"GATE OUT DATE" varchar,"SCHEDULED DELIVERY DATE" varchar,"ACTUAL DELIVERY DATE" varchar,"EMPTY READY FOR P/U" varchar,"EMPTY RETURN P/U DATE" varchar,"DELIVERY LOCATION" varchar,"CUSTOMER" varchar,"CC" varchar,"Load Content" varchar,"NOTES" varchar);
+copy liveload("LOAD NO","CONTAINER NO","SIZE","SSL","PORT TERMINAL","EXPORT BOOKING NO","ETA","LFD","CUSTOMS","FREIGHT","PICK-UP STATUS","GATE OUT DATE","SCHEDULED DELIVERY DATE","ACTUAL DELIVERY DATE","EMPTY READY FOR P/U","EMPTY RETURN P/U DATE","DELIVERY LOCATION","CUSTOMER","CC","Load Content","NOTES") From 'E:\SQUARELY\NODE_PROJECT\NODE_FILE\liveloaddemo.csv' delimiter ',' csv header;;
+
+
+create table liveload(load_no varchar, container_no varchar, size varchar, ssl varchar, port_terminal varchar, export_booking_no varchar, eta varchar, lfd varchar, custom varchar, freight varchar, pickup_status varchar, gate_out_date varchar, scheduled_delivery_date varchar, Actual_delivery_date varchar, empty_ready_for_pu varchar, empty_return_pu_date varchar, delivery_location varchar, Customer varchar, cc varchar, load_content varchar, notes varchar, status varchar);
+copy liveload(load_no, container_no, size, ssl, port_terminal, export_booking_no, eta, lfd, custom, freight, pickup_status, gate_out_date, scheduled_delivery_date, Actual_delivery_date, empty_ready_for_pu, empty_return_pu_date, delivery_location, Customer, cc, load_content, notes, status) From 'E:\SQUARELY\NODE_PROJECT\NODE_FILE\liveload.csv' delimiter ',' csv header;;
+
+create table archive(load_no varchar, container_no varchar, size varchar, ssl varchar, port_terminal varchar, export_booking_no varchar, eta varchar, lfd varchar, custom varchar, freight varchar, pickup_status varchar, gate_out_date varchar, scheduled_delivery_date varchar, Actual_delivery_date varchar, empty_ready_for_pu varchar, empty_return_pu_date varchar, delivery_location varchar, Customer varchar, cc varchar, notes varchar, status varchar);
+copy archive(load_no, container_no, size, ssl, port_terminal, export_booking_no, eta, lfd, custom, freight, pickup_status, gate_out_date, scheduled_delivery_date, Actual_delivery_date, empty_ready_for_pu, empty_return_pu_date, delivery_location, Customer, cc, notes, status) From 'E:\SQUARELY\NODE_PROJECT\NODE_FILE\Archive.csv' delimiter ',' csv header;;
+
+
+create table archive("LOAD NO" varchar,"CONTAINER NO" varchar,"SIZE" varchar,"SSL" varchar,"PORT TERMINAL" varchar,"EXPORT BOOKING NO" varchar,"ETA" varchar,"LFD" varchar,"CUSTOMS" varchar,"FREIGHT" varchar,"PICK-UP STATUS" varchar,"GATE OUT DATE" varchar,"SCHEDULED DELIVERY DATE" varchar,"ACTUAL DELIVERY DATE" varchar,"EMPTY READY FOR P/U" varchar,"EMPTY RETURN P/U DATE" varchar,"DELIVERY LOCATION" varchar,"CUSTOMER" varchar,"CC" varchar,"NOTES" varchar);
+copy archive("LOAD NO","CONTAINER NO","SIZE","SSL","PORT TERMINAL","EXPORT BOOKING NO","ETA","LFD","CUSTOMS","FREIGHT","PICK-UP STATUS","GATE OUT DATE","SCHEDULED DELIVERY DATE","ACTUAL DELIVERY DATE","EMPTY READY FOR P/U","EMPTY RETURN P/U DATE","DELIVERY LOCATION","CUSTOMER","CC","NOTES") From 'E:\SQUARELY\NODE_PROJECT\NODE_FILE\Archive.csv' delimiter ',' csv header;
+
+
 #####################################################################
 
 

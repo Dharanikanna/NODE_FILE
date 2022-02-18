@@ -63,9 +63,9 @@ const healthcare = require('../Models/healthcare')
  *              type: object
  *              properties:
  *                  id:
- *                      type: string
+ *                      type: integer
  *              example:
- *                id: "9"
+ *                id: 9
  *          name:
  *              type: object
  *              properties:
@@ -82,6 +82,16 @@ const healthcare = require('../Models/healthcare')
  *              example:
  *                name: "ABC"
  *                project: ABC-project
+ *          
+ *          hupdate:
+ *              type: object
+ *              properties:
+ *                  diabetespedigreefunction:
+ *                      type: integer
+ *              example:
+ *                diabetespedigreefunction: 9
+ *                id: 9
+ * 
  * 
  *          refreshtoken:
  *              type: object
@@ -204,11 +214,11 @@ router.post('/refreshtoken', user.refreshtoken)
  *         description: "No data exist"
  */
 
- router.get('/id',healthcare.getDataById)
+ router.post('/id',healthcare.getDataById)
  /**
  * @swagger
  * /healthcare/id:
- *   get:
+ *   post:
  *     tags:
  *       - "healthcare"
  *     description: heroku data
@@ -259,11 +269,12 @@ router.post('/refreshtoken', user.refreshtoken)
  *     tags:
  *       - "healthcare"
  *     description: heroku data
- *     parameters:
- *      - name: Id
- *        in: header
- *        required: true
- *        type: integer     
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schema/hupdate'     
  * 
  *     responses:
  *       201:
@@ -412,12 +423,12 @@ router.post('/login',seq.findOne)
  *         description: "No data exist"
  */
 
- router.get('/id', db.getDeveloperById)
+ router.post('/id', db.getDeveloperById)
 
  /**
  * @swagger
  * /developers/id:
- *   get:
+ *   post:
  *     tags:
  *       - "developers"
  *     description: Get unique data using id
@@ -439,12 +450,12 @@ router.post('/login',seq.findOne)
  */
 
 
- router.get('/name', db.getDeveloperByName)
+ router.post('/name', db.getDeveloperByName)
 
   /**
  * @swagger
  * /developers/name:
- *   get:
+ *   post:
  *     tags:
  *       - "developers"
  *     description: Get unique data using name
@@ -519,3 +530,6 @@ router.post('/login',seq.findOne)
 
 
 module.exports = router
+
+
+//reference : https://javascript.plainenglish.io/how-to-implement-and-use-swagger-in-nodejs-d0b95e765245

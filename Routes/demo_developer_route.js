@@ -6,8 +6,8 @@ const db = require('../Models/demoqueries')
 
 
 router.get('/getall', db.getAllDeveloper)
-router.get('/id', db.getDeveloperById)
-router.get('/name', db.getDeveloperByName)
+router.post('/id', db.getDeveloperById)
+router.post('/name', db.getDeveloperByName)
 router.post('/create', db.createDeveloper)
 router.delete('/delete', db.deleteDeveloper)
 
